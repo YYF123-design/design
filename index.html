@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 朋友档案站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #fff5f9;
+            color: #7a2c55;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            background-color: #d63384;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #ffd6e8;
+        }
+
+        /* Banner轮播区域 */
+                
+        .banner {
+            width: 100%;
+            height: 320px;
+            /* 引入背景图，铺满不重复 */
+            background: url("images/banner-bg.jpg") center center / cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 半透明遮罩层，实现透明淡化效果，数值0.4就是40%不透明度，你可以自己调大/调小 */
+        .banner::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background-color: rgba(255,255,255,0.4);
+            z-index:0;
+        }
+        /* 文字层级提到遮罩上方，保证文字清晰 */
+        .banner h2 {
+            position: relative;
+            z-index: 1;
+            color: #d63384;
+            font-size: 32px;
+        }
+        /* 左右箭头、小圆点也要抬层级 */
+        .arrow, .banner-dots{
+            position: relative;
+            z-index:1;
+        }
+
+        .banner h2 {
+            color: #d63384;
+            font-size: 32px;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+        }
+        .arrow-left {
+            left:20px;
+        }
+        .arrow-right {
+            right:20px;
+        }
+        .banner-dots {
+            position:absolute;
+            bottom:20px;
+            left:50%;
+            transform:translateX(-50%);
+            display:flex;
+            gap:8px;
+        }
+        .dot {
+            width:8px;
+            height:8px;
+            background:rgba(255,255,255,0.7);
+            border-radius:50%;
+        }
+
+        /* 主容器 */
+        .main-wrap {
+            padding: 20px;
+        }
+        /* 三栏横向布局 top-row */
+        .top-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* 左侧侧边栏 档案分类 */
+        .sidebar {
+            width: 200px;
+            background: #d63384;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .sidebar h3 {
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .sidebar ul li {
+            list-style: none;
+            margin: 12px 0;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display:block;
+            padding:6px 0;
+        }
+        .sidebar ul li a:hover {
+            color: #ffd6e8;
+        }
+
+        /* 中间主内容 精品朋友档案 */
+        .main-content {
+            flex: 1;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .main-content h3 {
+            color:#d63384;
+            margin-bottom:18px;
+        }
+        .friend-list-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0e0e8;
+        }
+        .friend-list-item:last-child{
+            border-bottom:none;
+        }
+        .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+        .friend-list-item a{
+            text-decoration:none;
+            color:#7a2c55;
+        }
+        .friend-list-item h4 {
+            color:#d63384;
+            margin-bottom:6px;
+        }
+        .friend-list-item p {
+            font-size:14px;
+            color:#996680;
+        }
+
+        /* 右侧最新动态 */
+        .news-box {
+            width: 180px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .news-box h3{
+            color:#d63384;
+            margin-bottom:12px;
+        }
+        .news-box ul {
+            padding-left: 18px;
+            font-size:14px;
+        }
+
+        /* 朋友向导 三卡片区域 */
+        .guide-title {
+            text-align: center;
+            color: #d63384;
+            margin: 30px 0 20px;
+        }
+        .guide-cards {
+    display: flex;
+}
+.guide-card {
+    flex: 1;
+    margin-right: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+.guide-card:last-child {
+    margin-right: 0;
+}
+
+         .guide-card {
+             flex: 1;
+             border-radius: 12px;
+             overflow: hidden;
+             background: #fff;
+         }
+         .guide-card .card-top {
+    width:100%;
+    height:140px;
+    object-fit: cover;
+    display:block;
+ 
+}
+
+         .guide-card p {
+             text-align: center;
+             padding: 10px;
+             background: #fff;
+         }
+         /* 底部页脚 */
+         footer {
+             margin-top:30px;
+             background:#d63384;
+             color:#fff;
+             text-align:center;
+             padding:16px;
+         }
+     </style>
+ </head>
+ <body>
+     <!-- 顶部导航 -->
+     <header>
+         <div class="logo">🌸 朋友档案站</div>
+         <nav>
+             <a href="index.html">首页</a>
+             <a href="lfriend.html">闺蜜档案</a>
+             <a href="wfriend.html">朋友档案</a>
+             <a href="boyfriend.html">爱人</a>
+         </nav>
+     </header>
+     <!-- Banner -->
+     <div class="banner">
+         <div class="arrow arrow-left">&lt;</div>
+         <h2>欢迎来到我的朋友信息主页</h2>
+         <div class="arrow arrow-right">&gt;</div>
+         <div class="banner-dots">
+             <span class="dot"></span>
+             <span class="dot"></span>
+             <span class="dot"></span>
+         </div>
+     </div>
+     <div class="main-wrap">
+         <!-- 三栏：侧边栏 + 主内容 + 最新动态 -->
+         <div class="top-row">
+             <!-- 档案分类侧边栏 -->
+             <div class="sidebar">
+                 <h3>档案分类</h3>
+                 <ul>
+                     <li><a href="lfriend.html">闺蜜档案</a></li>
+                     <li><a href="wfriend.html">朋友档案</a></li>
+                     <li><a href="boyfriend.html">爱人</a></li>
+                 </ul>
+             </div>
+             <!-- 中间精品朋友档案 -->
+             <div class="main-content">
+                 <h3>✨ 精品朋友档案</h3>
+                 <div class="friend-list-item">
+    <img src="images/l.jpg" class="avatar" alt="朋友一">
+    <a href="lfriend.html">
+        <h4>01 朋友一</h4>
+        <p>点击查看完整个人信息：年龄、工作、所在地、爱好</p>
+    </a>
+</div>
+
+                 <div class="friend-list-item">
+    <img src="images/w.jpg" class="avatar" alt="朋友二">
+    <a href="wfriend.html">
+        <h4>02 朋友二</h4>
+        <p>点击查看完整个人信息：年龄、工作、所在地、爱好</p>
+    </a>
+</div>
+
+                 <div class="friend-list-item">
+    <img src="images/boy.jpg" class="avatar" alt="朋友三">
+    <a href="boyfriend.html">
+        <h4>03 朋友三</h4>
+        <p>点击查看完整个人信息：年龄、工作、所在地、爱好</p>
+    </a>
+</div>
+
+             </div>
+             <!-- 右侧最新动态 -->
+             <div class="news-box">
+                 <h3>📢 最新动态</h3>
+                 <ul>
+                     <li>三位好友档案已上线</li>
+                     <li>主页粉色主题</li>
+                     <li>点击卡片查看详情</li>
+                 </ul>
+             </div>
+         </div>
+         <!-- 朋友向导 三卡片 -->
+         <h3 class="guide-title">朋友向导</h3>
+         <div class="guide-cards">
+    <div class="guide-card">
+        <a href="images/l.jpg" target="_blank" style="display:block;text-decoration:none;cursor:pointer;">
+            <img src="images/l.jpg" class="card-top" alt="朋友一">
+            <p style="color:#7a2c55;">朋友一</p>
+        </a>
+    </div>
+
+    <div class="guide-card">
+        <a href="images/w.jpg" target="_blank" style="display:block;text-decoration:none;cursor:pointer;">
+            <img src="images/w.jpg" class="card-top" alt="朋友二">
+            <p style="color:#7a2c55;">朋友二</p>
+        </a>
+    </div>
+
+    <div class="guide-card">
+        <a href="images/boy.jpg" target="_blank" style="display:block;text-decoration:none;cursor:pointer;">
+            <img src="images/boy.jpg" class="card-top" alt="朋友三">
+            <p style="color:#7a2c55;">朋友三</p>
+        </a>
+    </div>
+</div>
+
+</div>
+
+     </div>
+     <!-- 页脚 -->
+     <footer>
+         <p>© 朋友档案站 个人网页课程设计</p>
+     </footer>
+ </body>
+ </html>
